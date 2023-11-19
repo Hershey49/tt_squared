@@ -40,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
           return Center(
             child: Text(
               'Board ${index + 1}',
-              style: Theme.of(context).textTheme.headline5,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
           );
         }),
