@@ -34,17 +34,62 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: GridView.count(
-        crossAxisCount: 3,
-        children: List.generate(9, (index) {
-          return Center(
-            child: Text(
-              'Board ${index + 1}',
-              style: Theme.of(context).textTheme.headlineMedium,
+
+// Builds the Big Board
+      body: GridView.builder(
+        itemCount: 9,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          mainAxisSpacing: 4.0, 
+          crossAxisSpacing: 4.0, 
+        ),
+
+
+        itemBuilder: (context, index) {
+          return Container(
+            padding: EdgeInsets.all(8.0), 
+            decoration: BoxDecoration(
+              // border: Border.all(color: Colors.black), 
+            ),
+
+
+            child: GridView.builder(
+              itemCount: 9,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+              ),
+
+
+    
+              itemBuilder: (context, i) {
+                return Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey), 
+                  ),
+
+
+                  child: Center(
+                    child: Container(), //Placeholder when we work on functionality for the game
+                  ),
+
+
+
+                );
+              },
             ),
           );
-        }),
+        },
       ),
     );
   }
 }
+
+/*
+Harsha Palacherla 11/18/23
+Comments for future:
+-We will need to see how Dart uses clicked states
+-We will need to work on the algorythm for the game
+-
+-
+-
+*/
