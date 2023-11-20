@@ -4,6 +4,7 @@ void main() {
   runApp(MyApp());
 }
 
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -28,6 +29,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+List<List<String>> displayPiece = List.generate(9, (_) => List.filled(9, ""));
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,52 +51,74 @@ class _MyHomePageState extends State<MyHomePage> {
 
         itemBuilder: (context, index) {
           return Container(
-            padding: EdgeInsets.all(8.0), 
-            decoration: BoxDecoration(
-              // border: Border.all(color: Colors.black), 
-            ),
-
-
-            child: GridView.builder(
-              itemCount: 9,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
+            child: Container(
+              padding: EdgeInsets.all(8.0), 
+              decoration: BoxDecoration(
+                // border: Border.all(color: Colors.black), 
               ),
-
-
-    
-              itemBuilder: (context, i) {
-                return Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey), 
-                  ),
-
-
-                  child: Center(
-                    child: Container(), //Placeholder when we work on functionality for the game
-                  ),
-
-
-
-                );
-              },
+          
+          
+              child: GridView.builder(
+                itemCount: 9,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                ),
+          
+          
+              
+                itemBuilder: (context, i) {
+                  return GestureDetector(
+                    onTap:() => _tapped(index, i),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey), 
+                      ),
+                            
+                            
+                      child: Center(
+                        child: Text(displayPiece[index][i]), 
+                      ),
+                            
+                            
+                            
+                    ),
+                  );
+                },
+              ),
             ),
           );
         },
       ),
     );
   }
+
+  void _tapped (int index, int i) {
+  setState((){
+    displayPiece[index][i] = "X";
+  });
+}
 }
 
+
 /*
-Harsha Palacherla 11/18/23
-Comments for future:
+Harsha Palacherla 
+11/18/23
 -We will need to see how Dart uses clicked states
 -We will need to work on the algorythm for the game
--
--
--
+
+11/20/23
+-Worked on clicking functionality of each indvidual box. Ran into errors where clicks would apply to entire table/screen etc.
+-(cont.) Fixed it by indexing the overall table and position in table in a List
+- Used Gesture Detector to work on clicks
+- For now only changes on Tap to X. Researching if terniary statements in Dart are possible, because that will be very useful
+-(cont.) for changing player turns/states in case of mistakes. 
+- Reset Function that sets the state of all instances to 0? 
 */
 
-/* shreya is making a c
-omment*/
+/* Shreya Dubey
+11/19/23
+-Testing Github and Repo
+*/
+
+/*Jessica Harris
+*/
