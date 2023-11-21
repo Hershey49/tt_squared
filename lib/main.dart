@@ -9,26 +9,59 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Tic Tac Toe',
+      title: 'Tic Tac Squared',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Tic Tac Toe Home Page'),
+      home: HomePage(title: 'Tic Tac Squared'),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+class HomePage extends StatefulWidget {
+  final String title;
+
+  const HomePage({Key? key, required this.title}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.grey,
+      appBar: AppBar(
+        title: Text(widget.title),
+        backgroundColor: Colors.blueGrey[900],
+      ),
+      body: Center(
+        child: ElevatedButton(
+          child: Text('Start Game'),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MyGamePage(title: 'Tic Tac Toe Game Page')),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class MyGamePage extends StatefulWidget {
+  const MyGamePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyGamePageState createState() => _MyGamePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyGamePageState extends State<MyGamePage> {
 
 bool playerOne = true;
 List<List<String>> displayPiece = List.generate(9, (_) => List.filled(9, ""));
