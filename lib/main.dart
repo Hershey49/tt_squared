@@ -32,36 +32,109 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.blueGrey,
       appBar: AppBar(
         title: Text(widget.title),
-        backgroundColor: Colors.blueGrey[900],
+        backgroundColor: Colors.blue,
       ),
-      body: Center(
-        child: ElevatedButton(
-          child: Text('Start Game'),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => MyGamePage(title: 'Tic Tac Toe Game Page')),
-            );
-          },
+           body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ElevatedButton(
+              child: Text('Start Game'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => GamePage(title: 'Game Page')),
+                );
+              },
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              child: Text('Info Page'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => InfoPage(title: 'Info Page')),
+                );
+              },
+            ),
+             SizedBox(height: 20),
+              ElevatedButton(
+              child: Text('Stats Page'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => StatPage(title: 'Stats Page')),
+                );
+              },
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-class MyGamePage extends StatefulWidget {
-  const MyGamePage({Key? key, required this.title}) : super(key: key);
+class InfoPage extends StatefulWidget {
+  final String title;
+
+  const InfoPage({Key? key, required this.title}) : super(key: key);
+
+  @override
+  _InfoPageState createState() => _InfoPageState();
+}
+
+class _InfoPageState extends State<InfoPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.blueGrey,
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: Text('This will be Info Page in the future'),
+      ),
+    );
+  }
+}
+
+class StatPage extends StatefulWidget {
+  final String title;
+
+  const StatPage({Key? key, required this.title}) : super(key: key);
+
+  @override
+  _StatPageState createState() => _StatPageState();
+}
+
+class _StatPageState extends State<StatPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.blueGrey,
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: Text('This will be the Stats Page in the future'),
+      ),
+    );
+  }
+}
+
+class GamePage extends StatefulWidget {
+  const GamePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _MyGamePageState createState() => _MyGamePageState();
+  _GamePageState createState() => _GamePageState();
 }
 
-class _MyGamePageState extends State<MyGamePage> {
+class _GamePageState extends State<GamePage> {
 
 bool playerOne = true;
 List<List<String>> displayPiece = List.generate(9, (_) => List.filled(9, ""));
@@ -133,27 +206,3 @@ List<List<String>> displayPiece = List.generate(9, (_) => List.filled(9, ""));
   });
 }
 }
-
-
-/*
-Harsha Palacherla 
-11/18/23
--We will need to see how Dart uses clicked states
--We will need to work on the algorythm for the game
-
-11/20/23
--Worked on clicking functionality of each indvidual box. Ran into errors where clicks would apply to entire table/screen etc.
--(cont.) Fixed it by indexing the overall table and position in table in a List
-- Used Gesture Detector to work on clicks
-- For now only changes on Tap to X. Researching if terniary statements in Dart are possible, because that will be very useful
--(cont.) for changing player turns/states in case of mistakes. 
-- Reset Function that sets the state of all instances to 0? 
-*/
-
-/* Shreya Dubey
-11/19/23
--Testing Github and Repo
-*/
-
-/*Jessica Harris
-*/
