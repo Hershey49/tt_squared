@@ -30,6 +30,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+bool playerOne = true;
 List<List<String>> displayPiece = List.generate(9, (_) => List.filled(9, ""));
 
   @override
@@ -94,7 +95,8 @@ List<List<String>> displayPiece = List.generate(9, (_) => List.filled(9, ""));
 
   void _tapped (int index, int i) {
   setState((){
-    displayPiece[index][i] = "X";
+    displayPiece[index][i] = playerOne ? "O" : "X";
+    playerOne = !playerOne;
   });
 }
 }
