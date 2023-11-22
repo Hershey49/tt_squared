@@ -199,10 +199,12 @@ List<List<String>> displayPiece = List.generate(9, (_) => List.filled(9, ""));
     );
   }
 
-  void _tapped (int index, int i) {
+void _tapped (int index, int i) {
   setState((){
-    displayPiece[index][i] = playerOne ? "O" : "X";
-    playerOne = !playerOne;
+    if (displayPiece[index][i] == '') {
+      displayPiece[index][i] = playerOne ? "O" : "X";
+      playerOne = !playerOne;
+    }
   });
 }
 }

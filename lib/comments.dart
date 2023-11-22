@@ -17,6 +17,9 @@ Harsha Palacherla
 -Need to do research on icons to replace the buttons with icons in the future (if needed)
 -Ran into a problem where you can't have 2 Elevated Buttons in the same child so had to fix that.
 -Next steps are working on the algorythm (checkWinner function), will need to do some research on this.
+-Made modifications to _tapped function that prevents player overruling existing pieces
+-CheckWinner Function + Player Win count increment
+-Research how we can use Firebase for Authentication
 */
 
 /* Shreya Dubey
