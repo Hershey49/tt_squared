@@ -136,8 +136,11 @@ class GamePage extends StatefulWidget {
 
 class _GamePageState extends State<GamePage> {
 
-bool playerOne = true;
+bool playerState = true;
+String playerOne = 'X';
+String playerTwo = 'O';
 List<List<String>> displayPiece = List.generate(9, (_) => List.filled(9, ""));
+List<String> bigBoard = List.filled(9, "");
 
   @override
   Widget build(BuildContext context) {
@@ -162,6 +165,7 @@ List<List<String>> displayPiece = List.generate(9, (_) => List.filled(9, ""));
               padding: EdgeInsets.all(8.0), 
               decoration: BoxDecoration(
                 // border: Border.all(color: Colors.black), 
+                
               ),
           
           
@@ -184,10 +188,7 @@ List<List<String>> displayPiece = List.generate(9, (_) => List.filled(9, ""));
                             
                       child: Center(
                         child: Text(displayPiece[index][i]), 
-                      ),
-                            
-                            
-                            
+                      ),   
                     ),
                   );
                 },
@@ -199,12 +200,63 @@ List<List<String>> displayPiece = List.generate(9, (_) => List.filled(9, ""));
     );
   }
 
-void _tapped (int index, int i) {
-  setState((){
+void _tapped(int index, int i) {
+  setState(() {
     if (displayPiece[index][i] == '') {
-      displayPiece[index][i] = playerOne ? "O" : "X";
-      playerOne = !playerOne;
+      displayPiece[index][i] = playerState ? playerOne : playerTwo;
+      playerState = !playerState;
+
+      if (checkWin(displayPiece[index], displayPiece[index][i])) {
+        print('${displayPiece[index][i]} wins on small board $index!');
+
+          for (int j = 0; j < displayPiece[index].length; j++) {
+    displayPiece[index][j] = displayPiece[index][i];
+  }
+        bigBoard[index] = displayPiece[index][i];
+
+
+        if (checkWin(bigBoard, bigBoard[index])) {
+          print('${bigBoard[index]} wins on the big board!');
+
+            for (int j = 0; j < bigBoard.length; j++) {
+    bigBoard[j] = bigBoard[index];
+
+      for (int j = 0; j < displayPiece.length; j++) {
+    for (int k = 0; k < displayPiece[j].length; k++) {
+      displayPiece[j][k] = bigBoard[index];
+    }
+  }
+  }
+        }
+      }
     }
   });
+}
+
+bool checkWin(List<String> board, String player) {
+  // Check rows
+  for (int i = 0; i < 9; i += 3) {
+    if (board[i] == player && board[i + 1] == player && board[i + 2] == player) {
+      print('$player wins!');
+      return true;
+    }
+  }
+
+  // Check columns
+  for (int i = 0; i < 3; i++) {
+    if (board[i] == player && board[i + 3] == player && board[i + 6] == player) {
+      print('$player wins!');
+      return true;
+    }
+  }
+
+  // Check diagonals
+  if ((board[0] == player && board[4] == player && board[8] == player) ||
+      (board[2] == player && board[4] == player && board[6] == player)) {
+    print('$player wins!');
+    return true;
+  }
+
+  return false;
 }
 }

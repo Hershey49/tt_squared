@@ -20,6 +20,13 @@ Harsha Palacherla
 -Made modifications to _tapped function that prevents player overruling existing pieces
 -CheckWinner Function + Player Win count increment
 -Research how we can use Firebase for Authentication
+
+11/23/23
+-Finished the Algorithm for checking game wins
+-Came up with the idea of having the Big Board as a single Empty list that acts like a Small Board
+-(cont.) that is checked whenever a Small Board is won
+- Need to add some reset functionality after a game is won so all squares return to empty
+-Currently I can only print the win statement in the terminal, so next step is a popup
 */
 
 /* Shreya Dubey
