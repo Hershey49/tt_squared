@@ -201,25 +201,48 @@ void _tapped(int index, int i) {
       displayPiece[index][i] = playerState ? playerOne : playerTwo;
       playerState = !playerState;
 
-// Calls the checkWin Function for small board
-if (checkWin(displayPiece[index], displayPiece[index][i])) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text('${displayPiece[index][i]} wins on small board $index!'),
-        duration: Duration(seconds: 3),  
-    ),
-  );
+      // Calls the checkWin Function for small board
+      if (checkWin(displayPiece[index], displayPiece[index][i])) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('${displayPiece[index][i]} wins on small board $index!'),
+            duration: Duration(seconds: 3),  
+          ),
+        );
 
-// This sets the whole small board to the winning player
-  for (int j = 0; j < displayPiece[index].length; j++) {
-    displayPiece[index][j] = displayPiece[index][i];
-  }
+        // This sets the whole small board to the winning player
+        for (int j = 0; j < displayPiece[index].length; j++) {
+          displayPiece[index][j] = displayPiece[index][i];
+        }
+
         // This changes the value for corresponding Big Board value
         bigBoard[index] = displayPiece[index][i];
 
         if (checkWin(bigBoard, bigBoard[index])) {
-      // resetBoard();
-      //incororate resetBoard into a ShowDialog function
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Game Over'),
+                content: Text('${bigBoard[index]} wins! Would you like to play again?'),
+                actions: <Widget>[
+                  TextButton(
+                    child: Text('Yes'),
+                    onPressed: () {
+                      resetBoard();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  TextButton(
+                    child: Text('No'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
         }
       }
     }

@@ -30,7 +30,14 @@ Harsha Palacherla
 - Worked on Reset Mode function. Having trouble implementing a AlertDialog/ShowDialog prompt
 -(cont.) for Big Board wins. Will have to do some research into that.
 -Incorporated Snackbar for Smallboard wins to not distract from the game
+
+11/24/23
+-Finished Popup for Game Reset
+-Need to implement game board restriction for moves between small boards
+-(cont.) Use another temp variable to keep track of last move ?
+-Need to work on score in Game Screen and overall stats/leaderboard page
 */
+
 
 /* Shreya Dubey
 11/19/23
