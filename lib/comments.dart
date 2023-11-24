@@ -27,6 +27,9 @@ Harsha Palacherla
 -(cont.) that is checked whenever a Small Board is won
 - Need to add some reset functionality after a game is won so all squares return to empty
 -Currently I can only print the win statement in the terminal, so next step is a popup
+- Worked on Reset Mode function. Having trouble implementing a AlertDialog/ShowDialog prompt
+-(cont.) for Big Board wins. Will have to do some research into that.
+-Incorporated Snackbar for Smallboard wins to not distract from the game
 */
 
 /* Shreya Dubey

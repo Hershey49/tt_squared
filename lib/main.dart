@@ -1,9 +1,10 @@
+// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors, avoid_unnecessary_containers
+
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   @override
@@ -158,7 +159,6 @@ List<String> bigBoard = List.filled(9, "");
           crossAxisSpacing: 4.0, 
         ),
 
-
         itemBuilder: (context, index) {
           return Container(
             child: Container(
@@ -168,24 +168,19 @@ List<String> bigBoard = List.filled(9, "");
                 
               ),
           
-          
               child: GridView.builder(
                 itemCount: 9,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                 ),
           
-          
-              
                 itemBuilder: (context, i) {
                   return GestureDetector(
                     onTap:() => _tapped(index, i),
                     child: Container(
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey), 
-                      ),
-                            
-                            
+                      ),    
                       child: Center(
                         child: Text(displayPiece[index][i]), 
                       ),   
@@ -206,29 +201,41 @@ void _tapped(int index, int i) {
       displayPiece[index][i] = playerState ? playerOne : playerTwo;
       playerState = !playerState;
 
-      if (checkWin(displayPiece[index], displayPiece[index][i])) {
-        print('${displayPiece[index][i]} wins on small board $index!');
+// Calls the checkWin Function for small board
+if (checkWin(displayPiece[index], displayPiece[index][i])) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text('${displayPiece[index][i]} wins on small board $index!'),
+        duration: Duration(seconds: 3),  
+    ),
+  );
 
-          for (int j = 0; j < displayPiece[index].length; j++) {
+// This sets the whole small board to the winning player
+  for (int j = 0; j < displayPiece[index].length; j++) {
     displayPiece[index][j] = displayPiece[index][i];
   }
+        // This changes the value for corresponding Big Board value
         bigBoard[index] = displayPiece[index][i];
 
-
         if (checkWin(bigBoard, bigBoard[index])) {
-          print('${bigBoard[index]} wins on the big board!');
-
-            for (int j = 0; j < bigBoard.length; j++) {
-    bigBoard[j] = bigBoard[index];
-
-      for (int j = 0; j < displayPiece.length; j++) {
-    for (int k = 0; k < displayPiece[j].length; k++) {
-      displayPiece[j][k] = bigBoard[index];
-    }
-  }
-  }
+      // resetBoard();
+      //incororate resetBoard into a ShowDialog function
         }
       }
+    }
+  });
+}
+
+// This function resets both the Small Boards and Big Board
+void resetBoard() { 
+  setState(() {
+    for (int i = 0; i < displayPiece.length; i++) {
+      for (int j = 0; j < displayPiece[i].length; j++) {
+        displayPiece[i][j] = '';
+      }
+    }
+    for (int i = 0; i < bigBoard.length; i++) {
+      bigBoard[i] = '';
     }
   });
 }
@@ -237,26 +244,20 @@ bool checkWin(List<String> board, String player) {
   // Check rows
   for (int i = 0; i < 9; i += 3) {
     if (board[i] == player && board[i + 1] == player && board[i + 2] == player) {
-      print('$player wins!');
       return true;
     }
   }
-
   // Check columns
   for (int i = 0; i < 3; i++) {
     if (board[i] == player && board[i + 3] == player && board[i + 6] == player) {
-      print('$player wins!');
       return true;
     }
   }
-
   // Check diagonals
   if ((board[0] == player && board[4] == player && board[8] == player) ||
       (board[2] == player && board[4] == player && board[6] == player)) {
-    print('$player wins!');
     return true;
   }
-
   return false;
 }
 }
