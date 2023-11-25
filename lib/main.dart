@@ -142,6 +142,7 @@ String playerOne = 'X';
 String playerTwo = 'O';
 List<List<String>> displayPiece = List.generate(9, (_) => List.filled(9, ""));
 List<String> bigBoard = List.filled(9, "");
+int nextMove = -1;
 
   @override
   Widget build(BuildContext context) {
@@ -197,9 +198,11 @@ List<String> bigBoard = List.filled(9, "");
 
 void _tapped(int index, int i) {
   setState(() {
-    if (displayPiece[index][i] == '') {
+    if(nextMove == -1 || index == nextMove){
+     if (displayPiece[index][i] == '') {
       displayPiece[index][i] = playerState ? playerOne : playerTwo;
       playerState = !playerState;
+      nextMove = i;
 
       // Calls the checkWin Function for small board
       if (checkWin(displayPiece[index], displayPiece[index][i])) {
@@ -246,6 +249,7 @@ void _tapped(int index, int i) {
         }
       }
     }
+    }
   });
 }
 
@@ -267,18 +271,21 @@ bool checkWin(List<String> board, String player) {
   // Check rows
   for (int i = 0; i < 9; i += 3) {
     if (board[i] == player && board[i + 1] == player && board[i + 2] == player) {
+      nextMove = -1;
       return true;
     }
   }
   // Check columns
   for (int i = 0; i < 3; i++) {
     if (board[i] == player && board[i + 3] == player && board[i + 6] == player) {
+      nextMove = -1;
       return true;
     }
   }
   // Check diagonals
   if ((board[0] == player && board[4] == player && board[8] == player) ||
       (board[2] == player && board[4] == player && board[6] == player)) {
+    nextMove = -1;
     return true;
   }
   return false;

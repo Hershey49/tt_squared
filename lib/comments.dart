@@ -36,8 +36,12 @@ Harsha Palacherla
 -Need to implement game board restriction for moves between small boards
 -(cont.) Use another temp variable to keep track of last move ?
 -Need to work on score in Game Screen and overall stats/leaderboard page
-*/
 
+11/25/23
+-Worked on Game Board Restriction functionality. Running into error where a complete board 
+-(cont.) makes the game not continuable. Will need to add a clause for that
+-Need to work on the size of game page. Wrapping in container and Sized box didn't work.
+*/
 
 /* Shreya Dubey
 11/19/23
