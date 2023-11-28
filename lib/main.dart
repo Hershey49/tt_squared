@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             ElevatedButton(
-              child: Text('Start Game'),
+              child: Text('Multiplayer Game'),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -198,6 +198,10 @@ int nextMove = -1;
 
 void _tapped(int index, int i) {
   setState(() {
+    if (nextMove == -1 || checkWin(displayPiece[nextMove], playerOne) || checkWin(displayPiece[nextMove], playerTwo)) {
+      nextMove = -1; // Reset nextMove so the player can play anywhere
+    }
+
     if(nextMove == -1 || index == nextMove){
      if (displayPiece[index][i] == '') {
       displayPiece[index][i] = playerState ? playerOne : playerTwo;

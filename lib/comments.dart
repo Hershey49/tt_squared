@@ -1,4 +1,9 @@
 /*
+This is a documentation log to keep track of what each person worked and when. 
+Will be used in conjunction with Github Issues, Discord, and Teams to monitor our work.
+*/
+
+/*
 Harsha Palacherla 
 11/18/23
 -We will need to see how Dart uses clicked states
@@ -41,6 +46,10 @@ Harsha Palacherla
 -Worked on Game Board Restriction functionality. Running into error where a complete board 
 -(cont.) makes the game not continuable. Will need to add a clause for that
 -Need to work on the size of game page. Wrapping in container and Sized box didn't work.
+
+11/28/23
+-Fixed Issue#1 : Game progression halted, when nextMove points to a completed box
+- 
 */
 
 /* Shreya Dubey
