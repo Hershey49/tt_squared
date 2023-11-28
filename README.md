@@ -1,7 +1,9 @@
 # tt_squared
 
 Mobile App Development
+
 Team 4 - Tic Tac Squared
+
 Harsha Palacherla
 
 ## Getting Started
