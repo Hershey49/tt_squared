@@ -1,16 +1,13 @@
 # tt_squared
 
-A new Flutter project.
+Mobile App Development
+Team 4 - Tic Tac Squared
+Harsha Palacherla
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+1) Clone Repository 
 
-A few resources to get you started if this is your first Flutter project:
+2) Confirm you have all the dependencies needed to run a Flutter application
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+3) Run the Application (Android or Web only)
