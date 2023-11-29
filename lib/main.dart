@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => GamePage(title: 'Game Page')),
+                  MaterialPageRoute(builder: (context) => MPGamePage(title: 'Game Page')),
                 );
               },
             ),
@@ -177,16 +177,16 @@ class _StatPageState extends State<StatPage> {
   }
 }
 
-class GamePage extends StatefulWidget {
-  const GamePage({Key? key, required this.title}) : super(key: key);
+class MPGamePage extends StatefulWidget {
+  const MPGamePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _GamePageState createState() => _GamePageState();
+  _MPGamePageState createState() => _MPGamePageState();
 }
 
-class _GamePageState extends State<GamePage> {
+class _MPGamePageState extends State<MPGamePage> {
 
 bool playerState = true;
 String playerOne = 'X';
@@ -216,8 +216,6 @@ int nextMove = -1;
             child: Container(
               padding: EdgeInsets.all(8.0), 
               decoration: BoxDecoration(
-                // border: Border.all(color: Colors.black), 
-                
               ),
           
               child: GridView.builder(
