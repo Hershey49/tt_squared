@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors, avoid_unnecessary_containers
+// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 
@@ -37,6 +37,15 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text(widget.title),
         backgroundColor: Colors.blue,
+        actions: <Widget>[
+    IconButton(
+      icon: Icon(Icons.volume_up_rounded),
+      onPressed: () {
+        // Handle the onPressed event here
+        print(' button pressed!');
+      },
+    ),
+  ],
       ),
            body: Center(
         child: Column(
