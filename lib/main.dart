@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors, avoid_unnecessary_containers
-import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
 
 void main() {
   runApp(MyApp());
@@ -31,8 +30,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,20 +37,6 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text(widget.title),
         backgroundColor: Colors.blue,
-         actions: <Widget>[
-    IconButton(
-      icon: Icon(
-        Icons.audiotrack,
-        color: Colors.white,
-        size: 30.0
-      ),
-      onPressed: () {
-        // play music
-        final player = AudioPlayer();
-        player.play(AssetSource('music.mp3'));
-      },
-    )
-  ],
       ),
            body: Center(
         child: Column(
@@ -64,7 +47,7 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => MPGamePage(title: 'Game Page')),
+                  MaterialPageRoute(builder: (context) => GamePage(title: 'Game Page')),
                 );
               },
             ),
@@ -194,16 +177,16 @@ class _StatPageState extends State<StatPage> {
   }
 }
 
-class MPGamePage extends StatefulWidget {
-  const MPGamePage({Key? key, required this.title}) : super(key: key);
+class GamePage extends StatefulWidget {
+  const GamePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _MPGamePageState createState() => _MPGamePageState();
+  _GamePageState createState() => _GamePageState();
 }
 
-class _MPGamePageState extends State<MPGamePage> {
+class _GamePageState extends State<GamePage> {
 
 bool playerState = true;
 String playerOne = 'X';
@@ -233,6 +216,8 @@ int nextMove = -1;
             child: Container(
               padding: EdgeInsets.all(8.0), 
               decoration: BoxDecoration(
+                // border: Border.all(color: Colors.black), 
+                
               ),
           
               child: GridView.builder(
