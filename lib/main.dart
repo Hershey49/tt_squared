@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors, avoid_unnecessary_containers
-
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -30,6 +31,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,6 +40,20 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text(widget.title),
         backgroundColor: Colors.blue,
+         actions: <Widget>[
+    IconButton(
+      icon: Icon(
+        Icons.audiotrack,
+        color: Colors.white,
+        size: 30.0
+      ),
+      onPressed: () {
+        // play music
+        final player = AudioPlayer();
+        player.play(AssetSource('music.mp3'));
+      },
+    )
+  ],
       ),
            body: Center(
         child: Column(
