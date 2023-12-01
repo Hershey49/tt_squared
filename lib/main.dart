@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, depend_on_referenced_packages, non_constant_identifier_names
+// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, depend_on_referenced_packages, non_constant_identifier_names, override_on_non_overriding_member
 
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -32,18 +32,30 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+ 
+
   Widget build(BuildContext context) {
+   final Player = AudioPlayer(); 
     return Scaffold(
       backgroundColor: Colors.blueGrey,
       appBar: AppBar(
         title: Text(widget.title),
         backgroundColor: Colors.blue,
-        actions: <Widget>[
+        actions: [
+          
     IconButton(
       icon: Icon(Icons.volume_up_rounded),
       onPressed: () {
-        final Player = AudioPlayer();
         Player.play(AssetSource('music.mp3'));
+        Player.onPlayerComplete.listen((event) {
+          Player.play(AssetSource('music.mp3'));
+        });
+      },
+    ),
+    IconButton(
+      icon: Icon(Icons.volume_off_rounded),
+      onPressed: () {
+        Player.stop();
         
       },
     ),
