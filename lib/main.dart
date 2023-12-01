@@ -104,59 +104,100 @@ class _InfoPageState extends State<InfoPage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.black,
-              width: 2,
-            ),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Column(
-            children: [
-              Text("The game is played as follows:\nA large gameboard containing 81 squares divided into 9 small gameboards is provided. The first player to make a move may select a square anywhere across the 81 total squares. The location of this placement then determines which small gameboard the opponent may make their move in.",  
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 12,  
-                    color: Color.fromARGB(255, 208, 219, 231),  
-                    fontWeight: FontWeight.w500,  
-                    letterSpacing: 1,  
-                    wordSpacing: 1,  
-                    shadows: [  
-                      Shadow(color: Colors.black, offset: Offset(2,1), blurRadius:10)  
-                    ]  
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.black,
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(
+                children: [
+                  Text("\nTic Tac Squared is played as follows:\nA large gameboard containing 81 squares divided into 9 small gameboards is provided. The first player to make a move may select a square anywhere across the 81 total squares. The location of this placement then determines which small gameboard the opponent may make their move in.",  
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 12,  
+                        color: Color.fromARGB(255, 208, 219, 231),  
+                        fontWeight: FontWeight.w500,  
+                        letterSpacing: 1,  
+                        wordSpacing: 1,  
+                        shadows: [  
+                          Shadow(color: Colors.black, offset: Offset(2,1), blurRadius:10)  
+                        ]  
+                      ),
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(decoration: BoxDecoration(border: Border.all(color: Colors.black,width: 2,),), child: Image.asset('images/gameboardOneX.png')),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(decoration: BoxDecoration(border: Border.all(color: Colors.black,width: 2,),), child: Image.asset('images/gameboardOneXOneO.png')),
+                      )
+                    ],
+                  ),
+                  Text("Players continue placing their moves with the goal of winning a Tic-Tac-Toe on a small board. Once a player wins on a small board, all the spaces within that board will be filled with their designated icon. To win the large gameboard, a player must win three small gameboards to create a Tic-Tac-Toe in the large gameboard.\n",  
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 12,  
+                        color: Color.fromARGB(255, 208, 219, 231),  
+                        fontWeight: FontWeight.w500,  
+                        letterSpacing: 1,  
+                        wordSpacing: 1,  
+                        shadows: [  
+                          Shadow(color: Colors.black, offset: Offset(2,1), blurRadius:10)  
+                        ]  
+                      ),
+                  ),
+                ],
               ),
-              Image.asset('images/gameboardOneX.png'),   // resize this image 
-            ],
-          ),
-        ),
-        Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.black,
-              width: 2,
+                    ),
             ),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Text(  
-              "Hello World! This is a Text Widget.",  
-              style: TextStyle(  
-                fontSize: 12,  
-                color: Color.fromARGB(255, 192, 210, 231),  
-                fontWeight: FontWeight.w500,  
-                letterSpacing: 8,  
-                wordSpacing: 1,  
-                shadows: [  
-                  Shadow(color: Colors.black, offset: Offset(2,1), blurRadius:10)  
-                ]  
+          Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.black,
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(10),
               ),
-          ),
+              child: Column(
+                children: [
+                  Text("Included is an image containing an example win via the player representing X. A helpful tip to lead a player to success is:\n\n**Always keep track of the board your opponent will play in based off of your move!**\n\nBeing a strategy game comparable to chess, understanding an opponents moves is key to winning the game.",  
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 12,  
+                        color: Color.fromARGB(255, 208, 219, 231),  
+                        fontWeight: FontWeight.w500,  
+                        letterSpacing: 1,  
+                        wordSpacing: 1,  
+                        shadows: [  
+                          Shadow(color: Colors.black, offset: Offset(2,1), blurRadius:10)  
+                        ]  
+                      ),
+                  ),
+                  Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(decoration: BoxDecoration(border: Border.all(color: Colors.black,width: 2,),), child: Image.asset('images/exampleWin.png')),
+                  ),
+                ],
+              ),
+                    ),
+            ),
+          ]
         ),
-        ]
       ),
     );
   }
