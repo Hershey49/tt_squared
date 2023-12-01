@@ -1,6 +1,7 @@
-// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, depend_on_referenced_packages, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 void main() {
   runApp(MyApp());
@@ -41,8 +42,9 @@ class _HomePageState extends State<HomePage> {
     IconButton(
       icon: Icon(Icons.volume_up_rounded),
       onPressed: () {
-        // Handle the onPressed event here
-        print(' button pressed!');
+        final Player = AudioPlayer();
+        Player.play(AssetSource('music.mp3'));
+        
       },
     ),
   ],
