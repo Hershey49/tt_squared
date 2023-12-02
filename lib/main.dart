@@ -590,8 +590,10 @@ void _tapped(int index, int i) {
 
       //cpu response
       if (playerState == false) {
-        getCPUmove(nextMove);
+        nextMove = getCPUmove(nextMove);
         playerState = !playerState;
+
+        //
       }
 
       // Calls the checkWin Function for small board
@@ -681,22 +683,71 @@ bool checkWin(List<String> board, String player) {
   return false;
 }
 
-void getCPUmove (int index) {
+int getCPUmove (int index) {
   CPUi = random.nextInt(9);
   CPUindex = random.nextInt(9);
-
+  
   if (nextMove == -1 || checkWin(displayPiece[nextMove], playerOne) || checkWin(displayPiece[nextMove], playerTwo)) {
     if (displayPiece[CPUindex][CPUi] != playerOne || displayPiece[CPUindex][CPUi] != playerTwo) {
       displayPiece[CPUindex][CPUi] = playerTwo;
+      check(CPUindex, CPUi);
     } else {
       getCPUmove(index);
     }
   } else {
-    if (displayPiece[index][CPUi] != playerOne || displayPiece[index][CPUi] != playerTwo) {
+    if (displayPiece[index][CPUi] == "") { 
       displayPiece[index][CPUi] = playerTwo;
+      check(index, CPUi);
     } else {
       getCPUmove(index);
     }
   }
+  return CPUi;
+}
+
+void check(int index, int i) {
+  if (checkWin(displayPiece[index], displayPiece[index][i])) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('${displayPiece[index][i]} wins on small board $index!'),
+            duration: Duration(seconds: 3),  
+          ),
+        );
+
+        // This sets the whole small board to the winning player
+        for (int j = 0; j < displayPiece[index].length; j++) {
+          displayPiece[index][j] = displayPiece[index][i];
+        }
+
+        // This changes the value for corresponding Big Board value
+        bigBoard[index] = displayPiece[index][i];
+
+        if (checkWin(bigBoard, bigBoard[index])) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Game Over'),
+                content: Text('${bigBoard[index]} wins! Would you like to play again?'),
+                actions: <Widget>[
+                  TextButton(
+                    child: Text('Yes'),
+                    onPressed: () {
+                      resetBoard();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  TextButton(
+                    child: Text('No'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        }
+      }
 }
 }
