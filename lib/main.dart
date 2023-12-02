@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'dart:math'; 
 
 void main() {
   runApp(MyApp());
@@ -54,11 +55,21 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             ElevatedButton(
+              child: Text('Single Player Game'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SPGamePage(title: 'Single Player Game Page')),
+                );
+              },
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
               child: Text('Multiplayer Game'),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => GamePage(title: 'Game Page')),
+                  MaterialPageRoute(builder: (context) => GamePage(title: 'Multiplayer Game Page')),
                 );
               },
             ),
@@ -396,5 +407,204 @@ bool checkWin(List<String> board, String player) {
     return true;
   }
   return false;
+}
+}
+
+//Single Player Game Mode
+class SPGamePage extends StatefulWidget {
+  const SPGamePage({Key? key, required this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  _SPGamePageState createState() => _SPGamePageState();
+}
+
+class _SPGamePageState extends State<SPGamePage> {
+
+bool playerState = true;
+String playerOne = 'X';
+String playerTwo = 'O';
+List<List<String>> displayPiece = List.generate(9, (_) => List.filled(9, ""));
+List<String> bigBoard = List.filled(9, "");
+int nextMove = -1;
+Random random = Random();
+int CPUi = 0; 
+int CPUindex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+
+// Builds the Big Board
+      body: GridView.builder(
+        itemCount: 9,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          mainAxisSpacing: 4.0, 
+          crossAxisSpacing: 4.0, 
+        ),
+
+        itemBuilder: (context, index) {
+          return Container(
+            child: Container(
+              padding: EdgeInsets.all(8.0), 
+              decoration: BoxDecoration(
+                // border: Border.all(color: Colors.black), 
+                
+              ),
+          
+              child: GridView.builder(
+                itemCount: 9,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                ),
+          
+                itemBuilder: (context, i) {
+                  return GestureDetector(
+                    onTap:() => _tapped(index, i),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey), 
+                      ),    
+                      child: Center(
+                        child: Text(displayPiece[index][i]), 
+                      ),   
+                    ),
+                  );
+                },
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+void _tapped(int index, int i) {
+  setState(() {
+    if (nextMove == -1 || checkWin(displayPiece[nextMove], playerOne) || checkWin(displayPiece[nextMove], playerTwo)) {
+      nextMove = -1; // Reset nextMove so the player can play anywhere
+    }
+
+    if(nextMove == -1 || index == nextMove){
+     if (displayPiece[index][i] == '') {
+      displayPiece[index][i] = playerState ? playerOne : playerTwo;
+      playerState = !playerState;
+      nextMove = i;
+
+      //cpu response
+      if (playerState == false) {
+        getCPUmove(nextMove);
+        playerState = !playerState;
+      }
+
+      // Calls the checkWin Function for small board
+      if (checkWin(displayPiece[index], displayPiece[index][i])) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('${displayPiece[index][i]} wins on small board $index!'),
+            duration: Duration(seconds: 3),  
+          ),
+        );
+
+        // This sets the whole small board to the winning player
+        for (int j = 0; j < displayPiece[index].length; j++) {
+          displayPiece[index][j] = displayPiece[index][i];
+        }
+
+        // This changes the value for corresponding Big Board value
+        bigBoard[index] = displayPiece[index][i];
+
+        if (checkWin(bigBoard, bigBoard[index])) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Game Over'),
+                content: Text('${bigBoard[index]} wins! Would you like to play again?'),
+                actions: <Widget>[
+                  TextButton(
+                    child: Text('Yes'),
+                    onPressed: () {
+                      resetBoard();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  TextButton(
+                    child: Text('No'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        }
+      }
+    }
+    }
+  });
+}
+
+// This function resets both the Small Boards and Big Board
+void resetBoard() { 
+  setState(() {
+    for (int i = 0; i < displayPiece.length; i++) {
+      for (int j = 0; j < displayPiece[i].length; j++) {
+        displayPiece[i][j] = '';
+      }
+    }
+    for (int i = 0; i < bigBoard.length; i++) {
+      bigBoard[i] = '';
+    }
+  });
+}
+
+bool checkWin(List<String> board, String player) {
+  // Check rows
+  for (int i = 0; i < 9; i += 3) {
+    if (board[i] == player && board[i + 1] == player && board[i + 2] == player) {
+      nextMove = -1;
+      return true;
+    }
+  }
+  // Check columns
+  for (int i = 0; i < 3; i++) {
+    if (board[i] == player && board[i + 3] == player && board[i + 6] == player) {
+      nextMove = -1;
+      return true;
+    }
+  }
+  // Check diagonals
+  if ((board[0] == player && board[4] == player && board[8] == player) ||
+      (board[2] == player && board[4] == player && board[6] == player)) {
+    nextMove = -1;
+    return true;
+  }
+  return false;
+}
+
+void getCPUmove (int index) {
+  CPUi = random.nextInt(9);
+  CPUindex = random.nextInt(9);
+
+  if (nextMove == -1 || checkWin(displayPiece[nextMove], playerOne) || checkWin(displayPiece[nextMove], playerTwo)) {
+    if (displayPiece[CPUindex][CPUi] != playerOne || displayPiece[CPUindex][CPUi] != playerTwo) {
+      displayPiece[CPUindex][CPUi] = playerTwo;
+    } else {
+      getCPUmove(index);
+    }
+  } else {
+    if (displayPiece[index][CPUi] != playerOne || displayPiece[index][CPUi] != playerTwo) {
+      displayPiece[index][CPUi] = playerTwo;
+    } else {
+      getCPUmove(index);
+    }
+  }
 }
 }
