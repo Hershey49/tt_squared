@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, depend_on_referenced_packages, non_constant_identifier_names
+// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, depend_on_referenced_packages, non_constant_identifier_names, override_on_non_overriding_member, unused_local_variable
 
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -32,23 +32,63 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+ 
   @override
+ 
+
   Widget build(BuildContext context) {
+   final Player = AudioPlayer(); 
     return Scaffold(
       backgroundColor: Colors.blueGrey,
       appBar: AppBar(
         title: Text(widget.title),
         backgroundColor: Colors.blue,
-        actions: <Widget>[
-    IconButton(
-      icon: Icon(Icons.volume_up_rounded),
-      onPressed: () {
-        final Player = AudioPlayer();
+        actions: [
+     PopupMenuButton(
+     itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+    PopupMenuItem(
+      value: "Sound On",
+      onTap: () {
         Player.play(AssetSource('music.mp3'));
-        
+        Player.onPlayerComplete.listen((event) {
+          Player.play(AssetSource('music.mp3'));
+        });
       },
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Icon(Icons.volume_up_rounded, color: Colors.blue,)
+          ),
+          const Text(
+            'Sound On',
+            style: TextStyle(fontSize: 15), 
+          ),
+        ],
+      ),
     ),
+    PopupMenuItem(
+      value: "Sound Off",
+      onTap: () {
+        Player.stop();
+      },
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Icon(Icons.volume_off_rounded, color: Colors.blue,)
+          ),
+          const Text(
+            'Sound Off',
+            style: TextStyle(fontSize: 15),
+          ),
+        ],
+      ),
+    ),
+  
   ],
+)
+]
       ),
            body: Center(
         child: Column(
@@ -71,7 +111,12 @@ class _HomePageState extends State<HomePage> {
                   context,
                   MaterialPageRoute(builder: (context) => GamePage(title: 'Multiplayer Game Page')),
                 );
-              },
+                Player.play(AssetSource('music.mp3'));
+                Player.onPlayerComplete.listen((event) {
+                Player.play(AssetSource('music.mp3'));
+                 });
+              }
+              ,
             ),
             SizedBox(height: 20),
             ElevatedButton(
@@ -257,12 +302,59 @@ String playerTwo = 'O';
 List<List<String>> displayPiece = List.generate(9, (_) => List.filled(9, ""));
 List<String> bigBoard = List.filled(9, "");
 int nextMove = -1;
+final Player = AudioPlayer(); 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: [
+     PopupMenuButton(
+     itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+    PopupMenuItem(
+      value: "Sound On",
+      onTap: () {
+        Player.play(AssetSource('music.mp3'));
+        Player.onPlayerComplete.listen((event) {
+          Player.play(AssetSource('music.mp3'));
+        });
+      },
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Icon(Icons.volume_up_rounded, color: Colors.blue,)
+          ),
+          const Text(
+            'Sound On',
+            style: TextStyle(fontSize: 15), 
+          ),
+        ],
+      ),
+    ),
+    PopupMenuItem(
+      value: "Sound Off",
+      onTap: () {
+        Player.stop();
+      },
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Icon(Icons.volume_off_rounded, color: Colors.blue,)
+          ),
+          const Text(
+            'Sound Off',
+            style: TextStyle(fontSize: 15),
+          ),
+        ],
+      ),
+    ),
+  
+  ],
+)
+]
       ),
 
 // Builds the Big Board
