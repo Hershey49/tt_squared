@@ -28,8 +28,8 @@ class MyApp extends StatelessWidget {
 }
 
 class GameStats extends ChangeNotifier {
-  int _gamesPlayed = 58;
-  int _gamesWon = 0;
+  int _gamesPlayed = 49;
+  int _gamesWon = 27;
   int _leastMoves = 999;
   int _mostMoves = 0;
 
@@ -330,14 +330,42 @@ class _StatPageState extends State<StatPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Games Played: $gamesPlayed'),
-          Text('Games Won: $gamesWon'),
-          Text('Least Moves: $leastMoves'),
-          Text('Most Moves: $mostMoves'),
-          // Add other widgets or UI components as needed
+          _buildStatItem('Games Played', '$gamesPlayed'),
+          _buildStatItem('Games Won', '$gamesWon'),
+          _buildStatItem('Least Moves', '$leastMoves'),
+          _buildStatItem('Most Moves', '$mostMoves'),
         ],
       ),
     ),
+    );
+  }
+  Widget _buildStatItem(String title, String value) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 8),
+      padding: EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -489,11 +517,6 @@ void _tapped(int index, int i) {
         bigBoard[index] = displayPiece[index][i];
 
         if (checkWin(bigBoard, bigBoard[index])) {
-          _updateGamesPlayed();
-          _updateGamesWon();
-          int movesInCurrentGame = calculateTotalMoves(displayPiece);
-            _updateLeastMoves(movesInCurrentGame);
-            _updateMostMoves(movesInCurrentGame);
           showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -562,36 +585,6 @@ bool checkWin(List<String> board, String player) {
   }
   return false;
 }
-
-int calculateTotalMoves(List<List<String>> gameBoard) {
-  int totalMoves = 0;
-
-  for (int i = 0; i < gameBoard.length; i++) {
-    for (int j = 0; j < gameBoard[i].length; j++) {
-      if (gameBoard[i][j].isNotEmpty) {
-        totalMoves++;
-      }
-    }
-  }
-
-  return totalMoves;
-}
-
-void _updateGamesPlayed() {
-  Provider.of<GameStats>(context, listen: false).incrementGamesPlayed();
-}
-
-void _updateGamesWon() {
-  Provider.of<GameStats>(context, listen: false).incrementGamesWon();
-}
-
-  void _updateLeastMoves(int moves) {
-  Provider.of<GameStats>(context, listen: false).updateLeastMoves(moves);
-  }
-
-   void _updateMostMoves(int moves) {
-  Provider.of<GameStats>(context, listen: false).updateMostMoves(moves);
-  }
 }
 
 //Single Player Game Mode
@@ -706,6 +699,11 @@ void _tapped(int index, int i) {
         bigBoard[index] = displayPiece[index][i];
 
         if (checkWin(bigBoard, bigBoard[index])) {
+          _updateGamesPlayed();
+          _updateGamesWon();
+          int movesInCurrentGame = calculateTotalMoves(displayPiece);
+            _updateLeastMoves(movesInCurrentGame);
+            _updateMostMoves(movesInCurrentGame);
           showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -842,4 +840,33 @@ void check(int index, int i) {
         }
       }
 }
+int calculateTotalMoves(List<List<String>> gameBoard) {
+  int totalMoves = 0;
+
+  for (int i = 0; i < gameBoard.length; i++) {
+    for (int j = 0; j < gameBoard[i].length; j++) {
+      if (gameBoard[i][j].isNotEmpty) {
+        totalMoves++;
+      }
+    }
+  }
+
+  return totalMoves;
+}
+
+void _updateGamesPlayed() {
+  Provider.of<GameStats>(context, listen: false).incrementGamesPlayed();
+}
+
+void _updateGamesWon() {
+  Provider.of<GameStats>(context, listen: false).incrementGamesWon();
+}
+
+  void _updateLeastMoves(int moves) {
+  Provider.of<GameStats>(context, listen: false).updateLeastMoves(moves);
+  }
+
+   void _updateMostMoves(int moves) {
+  Provider.of<GameStats>(context, listen: false).updateMostMoves(moves);
+  }
 }
