@@ -3,9 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'dart:math'; 
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider(
+      create: (context) => GameStats(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -22,9 +27,46 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class GameStats extends ChangeNotifier {
+  int _gamesPlayed = 58;
+  int _gamesWon = 0;
+  int _leastMoves = 999;
+  int _mostMoves = 0;
+
+
+  int get gamesPlayed => _gamesPlayed;
+  int get gamesWon=> _gamesWon;
+  int get leastMoves=> _leastMoves;
+  int get mostMoves=> _mostMoves;
+
+  void incrementGamesPlayed() {
+    _gamesPlayed++;
+    notifyListeners();
+  }
+
+  void incrementGamesWon() {
+    _gamesWon++;
+    notifyListeners();
+  }
+
+  void updateLeastMoves(int moves) {
+    if (moves < _leastMoves) {
+      _leastMoves = moves;
+      notifyListeners();
+    }
+  }
+
+  void updateMostMoves(int moves) {
+    if (moves > _mostMoves) {
+      _mostMoves = moves;
+      notifyListeners();
+    }
+  }
+}
+
 class HomePage extends StatefulWidget {
   final String title;
-
+  
   const HomePage({Key? key, required this.title}) : super(key: key);
 
   @override
@@ -128,13 +170,15 @@ class _HomePageState extends State<HomePage> {
                 );
               },
             ),
-             SizedBox(height: 20),
-              ElevatedButton(
+            SizedBox(height: 20),
+            ElevatedButton(
               child: Text('Stats Page'),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => StatPage(title: 'Stats Page')),
+                  MaterialPageRoute(
+                    builder: (context) => StatPage(title: 'Stats Page'),
+                  ),
                 );
               },
             ),
@@ -273,14 +317,27 @@ class StatPage extends StatefulWidget {
 class _StatPageState extends State<StatPage> {
   @override
   Widget build(BuildContext context) {
+    int gamesPlayed = Provider.of<GameStats>(context).gamesPlayed;
+    int gamesWon= Provider.of<GameStats>(context).gamesWon;
+    int leastMoves= Provider.of<GameStats>(context).leastMoves;
+    int mostMoves= Provider.of<GameStats>(context).mostMoves;
     return Scaffold(
       backgroundColor: Colors.blueGrey,
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Text('This will be the Stats Page in the future'),
+    body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Games Played: $gamesPlayed'),
+          Text('Games Won: $gamesWon'),
+          Text('Least Moves: $leastMoves'),
+          Text('Most Moves: $mostMoves'),
+          // Add other widgets or UI components as needed
+        ],
       ),
+    ),
     );
   }
 }
@@ -432,6 +489,11 @@ void _tapped(int index, int i) {
         bigBoard[index] = displayPiece[index][i];
 
         if (checkWin(bigBoard, bigBoard[index])) {
+          _updateGamesPlayed();
+          _updateGamesWon();
+          int movesInCurrentGame = calculateTotalMoves(displayPiece);
+            _updateLeastMoves(movesInCurrentGame);
+            _updateMostMoves(movesInCurrentGame);
           showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -500,6 +562,36 @@ bool checkWin(List<String> board, String player) {
   }
   return false;
 }
+
+int calculateTotalMoves(List<List<String>> gameBoard) {
+  int totalMoves = 0;
+
+  for (int i = 0; i < gameBoard.length; i++) {
+    for (int j = 0; j < gameBoard[i].length; j++) {
+      if (gameBoard[i][j].isNotEmpty) {
+        totalMoves++;
+      }
+    }
+  }
+
+  return totalMoves;
+}
+
+void _updateGamesPlayed() {
+  Provider.of<GameStats>(context, listen: false).incrementGamesPlayed();
+}
+
+void _updateGamesWon() {
+  Provider.of<GameStats>(context, listen: false).incrementGamesWon();
+}
+
+  void _updateLeastMoves(int moves) {
+  Provider.of<GameStats>(context, listen: false).updateLeastMoves(moves);
+  }
+
+   void _updateMostMoves(int moves) {
+  Provider.of<GameStats>(context, listen: false).updateMostMoves(moves);
+  }
 }
 
 //Single Player Game Mode
