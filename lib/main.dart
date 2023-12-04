@@ -1,8 +1,8 @@
-// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, depend_on_referenced_packages, non_constant_identifier_names, override_on_non_overriding_member, unused_local_variable
+// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, depend_on_referenced_packages, non_constant_identifier_names, override_on_non_overriding_member, unused_local_variable, sort_child_properties_last
 
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/services.dart';
+//import 'package:flutter/services.dart';
 import 'dart:math'; 
 import 'package:provider/provider.dart';
 
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Tic Tac Squared',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.deepPurple,
       ),
       home: HomePage(title: 'Tic Tac Squared'),
       debugShowCheckedModeBanner: false,
@@ -85,9 +85,10 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Color.fromARGB(255, 87, 42, 197),
       appBar: AppBar( 
         title: Row(mainAxisAlignment: MainAxisAlignment.center,
+         
         children:[
        Image.asset('images/logo.png', fit: BoxFit.cover, height: 75),
-        Container(
+        Container( color: Color.fromARGB(170, 87, 42, 197),
           padding: const EdgeInsets.all(8.0), child: Text(widget.title))
         ],
         ),
@@ -124,7 +125,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
-            child: Icon(Icons.volume_off_rounded, color: Colors.blue,)
+            child: Icon(Icons.volume_off_rounded, color: Colors.purple,)
           ),
           const Text(
             'Sound Off',
@@ -173,10 +174,6 @@ class _HomePageState extends State<HomePage> {
                     context,
                     MaterialPageRoute(builder: (context) => GamePage(title: 'Multiplayer Game Page')),
                   );
-                  Player.play(AssetSource('music.mp3'));
-                  Player.onPlayerComplete.listen((event) {
-                  Player.play(AssetSource('music.mp3'));
-                   });
                 }
                 ,
               ),
@@ -444,58 +441,64 @@ final Player = AudioPlayer();
     return Container(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 87, 42, 197),
-          title: Text(widget.title),
-          actions: [
-       PopupMenuButton(
-       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-      PopupMenuItem(
-        value: "Sound On",
-        onTap: () {
+          backgroundColor: Colors.blue,
+          title: Row(mainAxisAlignment: MainAxisAlignment.center,         
+        children:[
+       Image.asset('images/logo.png', fit: BoxFit.cover, height: 75),
+        Container(
+          padding: const EdgeInsets.all(8.0), )
+        ],
+        ),
+        actions: [ 
+     PopupMenuButton(
+     itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+    PopupMenuItem(
+      value: "Sound On",
+      onTap: () {
+        Player.play(AssetSource('music.mp3'));
+        Player.onPlayerComplete.listen((event) {
           Player.play(AssetSource('music.mp3'));
-          Player.onPlayerComplete.listen((event) {
-            Player.play(AssetSource('music.mp3'));
-          });
-        },
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: Icon(Icons.volume_up_rounded, color: Colors.blue,)
-            ),
-            const Text(
-              'Sound On',
-              style: TextStyle(fontSize: 15), 
-            ),
-          ],
-        ),
+        });
+      },
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Icon(Icons.volume_up_rounded, color: Colors.blue,)
+          ),
+          const Text(
+            'Sound On',
+            style: TextStyle(fontSize: 15), 
+          ),
+        ],
       ),
-      PopupMenuItem(
-        value: "Sound Off",
-        onTap: () {
-          Player.stop();
-        },
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: Icon(Icons.volume_off_rounded, color: Colors.blue,)
-            ),
-            const Text(
-              'Sound Off',
-              style: TextStyle(fontSize: 15),
-            ),
-          ],
-        ),
+    ),
+    PopupMenuItem(
+      value: "Sound Off",
+      onTap: () {
+        Player.stop();
+      },
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Icon(Icons.volume_off_rounded, color: Colors.blue,)
+          ),
+          const Text(
+            'Sound Off',
+            style: TextStyle(fontSize: 15),
+          ),
+        ],
       ),
-      
-      ],
-    )
-    ]
+    ),
+  
+  ],
+)
+]
         ),
     
     // Builds the Big Board
-        body: GridView.builder(
+        body:Padding (padding: EdgeInsets.only(top: 60.0), child: GridView.builder(
           itemCount: 9,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3,
@@ -537,7 +540,7 @@ final Player = AudioPlayer();
           },
         ),
       ),
-    );
+    ));
   }
 
 void _tapped(int index, int i) {
@@ -661,17 +664,70 @@ int nextMove = -1;
 Random random = Random();
 int CPUi = 0; 
 int CPUindex = 0;
+final Player = AudioPlayer();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 87, 42, 197),
-        title: Text(widget.title),
+        backgroundColor: Colors.blue,
+          title: Row(mainAxisAlignment: MainAxisAlignment.center,         
+        children:[
+       Image.asset('images/logo.png', fit: BoxFit.cover, height: 75),
+        Container(
+          padding: const EdgeInsets.all(8.0), )
+        ],
+        ),
+        actions: [ 
+     PopupMenuButton(
+     itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+    PopupMenuItem(
+      value: "Sound On",
+      onTap: () {
+        Player.play(AssetSource('music.mp3'));
+        Player.onPlayerComplete.listen((event) {
+          Player.play(AssetSource('music.mp3'));
+        });
+      },
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Icon(Icons.volume_up_rounded, color: Colors.blue,)
+          ),
+          const Text(
+            'Sound On',
+            style: TextStyle(fontSize: 15), 
+          ),
+        ],
+      ),
+    ),
+    PopupMenuItem(
+      value: "Sound Off",
+      onTap: () {
+        Player.stop();
+      },
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Icon(Icons.volume_off_rounded, color: Colors.blue,)
+          ),
+          const Text(
+            'Sound Off',
+            style: TextStyle(fontSize: 15),
+          ),
+        ],
+      ),
+    ),
+  
+  ],
+)
+]
       ),
 
 // Builds the Big Board
-      body: GridView.builder(
+      body: Padding(padding: EdgeInsets.only(top: 60.0) ,child:GridView.builder(
         itemCount: 9,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
@@ -712,7 +768,7 @@ int CPUindex = 0;
           );
         },
       ),
-    );
+    ));
   }
 
 void _tapped(int index, int i) {
