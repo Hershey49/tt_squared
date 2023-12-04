@@ -518,7 +518,7 @@ final Player = AudioPlayer();
                       onTap:() => _tapped(index, i),
                       child: Container(
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey), 
+                          border: Border.all(color: Color.fromARGB(255, 87, 42, 197)), 
                         ),    
                         child: Center(
                           child: Text(displayPiece[index][i]), 
@@ -694,7 +694,7 @@ int CPUindex = 0;
                     onTap:() => _tapped(index, i),
                     child: Container(
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey), 
+                        border: Border.all(color: Color.fromARGB(255, 87, 42, 197)), 
                       ),    
                       child: Center(
                         child: Text(displayPiece[index][i]), 
@@ -726,8 +726,6 @@ void _tapped(int index, int i) {
       if (playerState == false) {
         nextMove = getCPUmove(nextMove);
         playerState = !playerState;
-
-        //
       }
 
       // Calls the checkWin Function for small board
