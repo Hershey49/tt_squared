@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, depend_on_referenced_packages, non_constant_identifier_names, override_on_non_overriding_member, unused_local_variable, sort_child_properties_last
+// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, depend_on_referenced_packages, non_constant_identifier_names, override_on_non_overriding_member, unused_local_variable, sort_child_properties_last, unused_label, dead_code
 
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -540,7 +540,16 @@ final Player = AudioPlayer();
           },
         ),
       ),
-    ));
+      floatingActionButton: FloatingActionButton(onPressed:() => showDialog <String>
+  (context: context, builder: 
+          (BuildContext context) => AlertDialog(title: const Text('How To Play'),
+          content: const Text('The first player to make a move may select a square anywhere across the 81 total squares. The location of this placement then determines which small gameboard the opponent may make their move in.'), 
+          actions: <Widget>[
+            TextButton(onPressed: () => Navigator.pop(context,'OK'), child: const Text('OK'))
+          ],
+          ),
+          ), child: Icon(Icons.help, color: Colors.white,)),
+          ));
   }
 
 void _tapped(int index, int i) {
@@ -768,7 +777,16 @@ final Player = AudioPlayer();
           );
         },
       ),
-    ));
+    ),
+   floatingActionButton: FloatingActionButton(onPressed:() => showDialog <String>
+  (context: context, builder: 
+          (BuildContext context) => AlertDialog(title: const Text('How To Play'),
+          content: const Text('The first player to make a move may select a square anywhere across the 81 total squares. The location of this placement then determines which small gameboard the opponent may make their move in.'), 
+          actions: <Widget>[
+            TextButton(onPressed: () => Navigator.pop(context,'OK'), child: const Text('OK'))
+          ],
+          ),
+          ), child: Icon(Icons.help, color: Colors.white,)), );
   }
 
 void _tapped(int index, int i) {
