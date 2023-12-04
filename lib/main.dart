@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/services.dart';
 import 'dart:math'; 
 import 'package:provider/provider.dart';
 
@@ -81,10 +82,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
    final Player = AudioPlayer(); 
     return Scaffold(
-      backgroundColor: Colors.blueGrey,
+      backgroundColor: Color.fromARGB(255, 87, 42, 197),
       appBar: AppBar(
         title: Text(widget.title),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.transparent,
         actions: [
      PopupMenuButton(
      itemBuilder: (BuildContext context) => <PopupMenuEntry>[
@@ -132,59 +133,80 @@ class _HomePageState extends State<HomePage> {
 )
 ]
       ),
-           body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ElevatedButton(
-              child: Text('Single Player Game'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SPGamePage(title: 'Single Player Game Page')),
-                );
-              },
+           body: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromARGB(255, 156, 201, 237),
+                  Color.fromARGB(255, 129, 241, 181),
+                ])
             ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              child: Text('Multiplayer Game'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => GamePage(title: 'Multiplayer Game Page')),
-                );
-                Player.play(AssetSource('music.mp3'));
-                Player.onPlayerComplete.listen((event) {
-                Player.play(AssetSource('music.mp3'));
-                 });
-              }
-              ,
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              child: Text('Info Page'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => InfoPage(title: 'Info Page')),
-                );
-              },
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              child: Text('Stats Page'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => StatPage(title: 'Stats Page'),
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
+             child: Center(
+                   child: Column(
+                     mainAxisAlignment: MainAxisAlignment.center,
+                     children: <Widget>[
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromARGB(170, 87, 42, 197),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SPGamePage(title: 'Single Player Game Page')),
+                  );
+                },
+                child: Text('Single Player Game'),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromARGB(170, 87, 42, 197),
+                ),
+                child: Text('Multiplayer Game'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => GamePage(title: 'Multiplayer Game Page')),
+                  );
+                  Player.play(AssetSource('music.mp3'));
+                  Player.onPlayerComplete.listen((event) {
+                  Player.play(AssetSource('music.mp3'));
+                   });
+                }
+                ,
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromARGB(170, 87, 42, 197),
+                ),
+                child: Text('Info Page'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => InfoPage(title: 'Info Page')),
+                  );
+                },
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromARGB(170, 87, 42, 197),
+                ),
+                child: Text('Stats Page'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => StatPage(title: 'Stats Page'),
+                    ),
+                  );
+                },
+              ),
+                     ],
+                   ),
+                 ),
+           ),
     );
   }
 }
@@ -201,104 +223,114 @@ class InfoPage extends StatefulWidget {
 class _InfoPageState extends State<InfoPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.blueGrey,
-      appBar: AppBar(
-        title: Text(widget.title),
+    return Container(
+      decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromARGB(255, 156, 201, 237),
+                  Color.fromARGB(255, 129, 241, 181),
+                ])
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 87, 42, 197),
+          title: Text(widget.title),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.black,
+                    width: 2,
+                  ),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  children: [
+                    Text("\nTic Tac Squared is played as follows:\nA large gameboard containing 81 squares divided into 9 small gameboards is provided. The first player to make a move may select a square anywhere across the 81 total squares. The location of this placement then determines which small gameboard the opponent may make their move in.",  
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 12,  
+                          color: Colors.black,  
+                          fontWeight: FontWeight.w500,  
+                          letterSpacing: 1,  
+                          wordSpacing: 1,  
+                          shadows: [  
+                            Shadow(color: Color.fromARGB(255, 87, 42, 197), offset: Offset(2,1), blurRadius:10)  
+                          ]  
+                        ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(decoration: BoxDecoration(border: Border.all(color: Colors.black,width: 2,),), child: Image.asset('images/gameboardOneX.png')),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(decoration: BoxDecoration(border: Border.all(color: Colors.black,width: 2,),), child: Image.asset('images/gameboardOneXOneO.png')),
+                        )
+                      ],
+                    ),
+                    Text("Players continue placing their moves with the goal of winning a Tic-Tac-Toe on a small board. Once a player wins on a small board, all the spaces within that board will be filled with their designated icon. To win the large gameboard, a player must win three small gameboards to create a Tic-Tac-Toe in the large gameboard.\n",  
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 12,  
+                          color: Colors.black,  
+                          fontWeight: FontWeight.w500,  
+                          letterSpacing: 1,  
+                          wordSpacing: 1,  
+                          shadows: [  
+                            Shadow(color: Color.fromARGB(255, 87, 42, 197), offset: Offset(2,1), blurRadius:10)  
+                          ]  
+                        ),
+                    ),
+                  ],
+                ),
+                      ),
+              ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.black,
-                  width: 2,
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.black,
+                    width: 2,
+                  ),
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                children: [
-                  Text("\nTic Tac Squared is played as follows:\nA large gameboard containing 81 squares divided into 9 small gameboards is provided. The first player to make a move may select a square anywhere across the 81 total squares. The location of this placement then determines which small gameboard the opponent may make their move in.",  
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 12,  
-                        color: Color.fromARGB(255, 208, 219, 231),  
-                        fontWeight: FontWeight.w500,  
-                        letterSpacing: 1,  
-                        wordSpacing: 1,  
-                        shadows: [  
-                          Shadow(color: Colors.black, offset: Offset(2,1), blurRadius:10)  
-                        ]  
-                      ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(decoration: BoxDecoration(border: Border.all(color: Colors.black,width: 2,),), child: Image.asset('images/gameboardOneX.png')),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(decoration: BoxDecoration(border: Border.all(color: Colors.black,width: 2,),), child: Image.asset('images/gameboardOneXOneO.png')),
-                      )
-                    ],
-                  ),
-                  Text("Players continue placing their moves with the goal of winning a Tic-Tac-Toe on a small board. Once a player wins on a small board, all the spaces within that board will be filled with their designated icon. To win the large gameboard, a player must win three small gameboards to create a Tic-Tac-Toe in the large gameboard.\n",  
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 12,  
-                        color: Color.fromARGB(255, 208, 219, 231),  
-                        fontWeight: FontWeight.w500,  
-                        letterSpacing: 1,  
-                        wordSpacing: 1,  
-                        shadows: [  
-                          Shadow(color: Colors.black, offset: Offset(2,1), blurRadius:10)  
-                        ]  
-                      ),
-                  ),
-                ],
-              ),
+                child: Column(
+                  children: [
+                    Text("Included is an image containing an example win via the player representing X. A helpful tip to lead a player to success is:\n\n**Always keep track of the board your opponent will play in based off of your move!**\n\nBeing a strategy game comparable to chess, understanding an opponents moves is key to winning the game.",  
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 12,  
+                          color: Colors.black,  
+                          fontWeight: FontWeight.w500,  
+                          letterSpacing: 1,  
+                          wordSpacing: 1,  
+                          shadows: [  
+                            Shadow(color: Color.fromARGB(255, 87, 42, 197), offset: Offset(2,1), blurRadius:10)  
+                          ]  
+                        ),
                     ),
-            ),
-          Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.black,
-                  width: 2,
+                    Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(decoration: BoxDecoration(border: Border.all(color: Colors.black,width: 2,),), child: Image.asset('images/exampleWin.png')),
+                    ),
+                  ],
                 ),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                children: [
-                  Text("Included is an image containing an example win via the player representing X. A helpful tip to lead a player to success is:\n\n**Always keep track of the board your opponent will play in based off of your move!**\n\nBeing a strategy game comparable to chess, understanding an opponents moves is key to winning the game.",  
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 12,  
-                        color: Color.fromARGB(255, 208, 219, 231),  
-                        fontWeight: FontWeight.w500,  
-                        letterSpacing: 1,  
-                        wordSpacing: 1,  
-                        shadows: [  
-                          Shadow(color: Colors.black, offset: Offset(2,1), blurRadius:10)  
-                        ]  
                       ),
-                  ),
-                  Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(decoration: BoxDecoration(border: Border.all(color: Colors.black,width: 2,),), child: Image.asset('images/exampleWin.png')),
-                  ),
-                ],
               ),
-                    ),
-            ),
-          ]
+            ]
+          ),
         ),
       ),
     );
@@ -321,22 +353,35 @@ class _StatPageState extends State<StatPage> {
     int gamesWon= Provider.of<GameStats>(context).gamesWon;
     int leastMoves= Provider.of<GameStats>(context).leastMoves;
     int mostMoves= Provider.of<GameStats>(context).mostMoves;
-    return Scaffold(
-      backgroundColor: Colors.blueGrey,
-      appBar: AppBar(
-        title: Text(widget.title),
+    return Container(
+      decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromARGB(255, 156, 201, 237),
+                  Color.fromARGB(255, 129, 241, 181),
+                ])
       ),
-    body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _buildStatItem('Games Played', '$gamesPlayed'),
-          _buildStatItem('Games Won', '$gamesWon'),
-          _buildStatItem('Least Moves', '$leastMoves'),
-          _buildStatItem('Most Moves', '$mostMoves'),
-        ],
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 87, 42, 197),
+          title: Text(widget.title),
+        ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _buildStatItem('Games Played', '$gamesPlayed'),
+              _buildStatItem('Games Won', '$gamesWon'),
+              _buildStatItem('Least Moves', '$leastMoves'),
+              _buildStatItem('Most Moves', '$mostMoves'),
+            ],
+          ),
+        ),
       ),
-    ),
+      ),
     );
   }
   Widget _buildStatItem(String title, String value) {
@@ -391,98 +436,101 @@ final Player = AudioPlayer();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        actions: [
-     PopupMenuButton(
-     itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-    PopupMenuItem(
-      value: "Sound On",
-      onTap: () {
-        Player.play(AssetSource('music.mp3'));
-        Player.onPlayerComplete.listen((event) {
+    return Container(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 87, 42, 197),
+          title: Text(widget.title),
+          actions: [
+       PopupMenuButton(
+       itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+      PopupMenuItem(
+        value: "Sound On",
+        onTap: () {
           Player.play(AssetSource('music.mp3'));
-        });
-      },
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: Icon(Icons.volume_up_rounded, color: Colors.blue,)
-          ),
-          const Text(
-            'Sound On',
-            style: TextStyle(fontSize: 15), 
-          ),
-        ],
-      ),
-    ),
-    PopupMenuItem(
-      value: "Sound Off",
-      onTap: () {
-        Player.stop();
-      },
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: Icon(Icons.volume_off_rounded, color: Colors.blue,)
-          ),
-          const Text(
-            'Sound Off',
-            style: TextStyle(fontSize: 15),
-          ),
-        ],
-      ),
-    ),
-  
-  ],
-)
-]
-      ),
-
-// Builds the Big Board
-      body: GridView.builder(
-        itemCount: 9,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          mainAxisSpacing: 4.0, 
-          crossAxisSpacing: 4.0, 
-        ),
-
-        itemBuilder: (context, index) {
-          return Container(
-            child: Container(
-              padding: EdgeInsets.all(8.0), 
-              decoration: BoxDecoration(
-                // border: Border.all(color: Colors.black), 
-                
-              ),
-          
-              child: GridView.builder(
-                itemCount: 9,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                ),
-          
-                itemBuilder: (context, i) {
-                  return GestureDetector(
-                    onTap:() => _tapped(index, i),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey), 
-                      ),    
-                      child: Center(
-                        child: Text(displayPiece[index][i]), 
-                      ),   
-                    ),
-                  );
-                },
-              ),
-            ),
-          );
+          Player.onPlayerComplete.listen((event) {
+            Player.play(AssetSource('music.mp3'));
+          });
         },
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Icon(Icons.volume_up_rounded, color: Colors.blue,)
+            ),
+            const Text(
+              'Sound On',
+              style: TextStyle(fontSize: 15), 
+            ),
+          ],
+        ),
+      ),
+      PopupMenuItem(
+        value: "Sound Off",
+        onTap: () {
+          Player.stop();
+        },
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Icon(Icons.volume_off_rounded, color: Colors.blue,)
+            ),
+            const Text(
+              'Sound Off',
+              style: TextStyle(fontSize: 15),
+            ),
+          ],
+        ),
+      ),
+      
+      ],
+    )
+    ]
+        ),
+    
+    // Builds the Big Board
+        body: GridView.builder(
+          itemCount: 9,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            mainAxisSpacing: 4.0, 
+            crossAxisSpacing: 4.0, 
+          ),
+    
+          itemBuilder: (context, index) {
+            return Container(
+              child: Container(
+                padding: EdgeInsets.all(8.0), 
+                decoration: BoxDecoration(
+                  // border: Border.all(color: Colors.black), 
+                  
+                ),
+            
+                child: GridView.builder(
+                  itemCount: 9,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                  ),
+            
+                  itemBuilder: (context, i) {
+                    return GestureDetector(
+                      onTap:() => _tapped(index, i),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey), 
+                        ),    
+                        child: Center(
+                          child: Text(displayPiece[index][i]), 
+                        ),   
+                      ),
+                    );
+                  },
+                ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -613,6 +661,7 @@ int CPUindex = 0;
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 87, 42, 197),
         title: Text(widget.title),
       ),
 
@@ -781,6 +830,7 @@ int getCPUmove (int index) {
     if (displayPiece[CPUindex][CPUi] != playerOne || displayPiece[CPUindex][CPUi] != playerTwo) {
       displayPiece[CPUindex][CPUi] = playerTwo;
       check(CPUindex, CPUi);
+      CPUi = -1;
     } else {
       getCPUmove(index);
     }
