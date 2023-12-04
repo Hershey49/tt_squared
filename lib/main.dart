@@ -83,9 +83,14 @@ class _HomePageState extends State<HomePage> {
    final Player = AudioPlayer(); 
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 87, 42, 197),
-      appBar: AppBar(
-        title: Text(widget.title),
-        backgroundColor: Colors.transparent,
+      appBar: AppBar( 
+        title: Row(mainAxisAlignment: MainAxisAlignment.center,
+        children:[
+       Image.asset('images/logo.png', fit: BoxFit.cover, height: 75),
+        Container(
+          padding: const EdgeInsets.all(8.0), child: Text(widget.title))
+        ],
+        ),
         actions: [
      PopupMenuButton(
      itemBuilder: (BuildContext context) => <PopupMenuEntry>[
