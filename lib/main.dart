@@ -29,9 +29,9 @@ class MyApp extends StatelessWidget {
 }
 
 class GameStats extends ChangeNotifier {
-  int _gamesPlayed = 49;
-  int _gamesWon = 27;
-  int _leastMoves = 999;
+  int _gamesPlayed = 0;
+  int _gamesWon = 0;
+  int _leastMoves = 81;
   int _mostMoves = 0;
 
 
